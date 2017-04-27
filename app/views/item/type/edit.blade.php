@@ -7,6 +7,7 @@ Update
 @stop
 @section('content')
 <div class="container-fluid">
+    @include('item.type.sidebar.default')
   <div class="row">
     <div class="col-sm-offset-3 col-sm-6">  
       @if (count($errors) > 0)

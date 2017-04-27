@@ -19,7 +19,7 @@ class CreateUserTable extends Migration {
 			$table->string('password',254);
 			$table->integer('accesslevel');
 			$table->string('firstname',100);
-			$table->string('middlename',50);
+			$table->string('middlename',50)->nullable();
 			$table->string('lastname',50);
 			$table->string('contactnumber',50);
 			$table->string('email',100);

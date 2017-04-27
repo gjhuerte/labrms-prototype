@@ -11,7 +11,8 @@ class ItemTypesController extends \BaseController {
 	{
 		$itemtype = Itemtype::all();
 		return View::make('item.type.index')
-			->with('itemtype',$itemtype);
+			->with('itemtype',$itemtype)
+			->with('active_tab','overview');
 	}
 
 
@@ -23,30 +24,52 @@ class ItemTypesController extends \BaseController {
 
 	public function create()
 	{
-		return View::make('item.type.create');
+		return View::make('item.type.create')
+			->with('active_tab','add');
 	}
 
 	public function store()
 	{
-		$data = [
-			'type' => Input::get('name'),
-			'description' => Input::get('description')
-		];
+		// $data = [
+		// 	'type' => Input::get('name'),
+		// 	'description' => Input::get('description')
+		// ];
 
-		$validator = Validator::make($data,Itemtype::$rules);
-		if($validator->fails())
+		// $validator = Validator::make($data,Itemtype::$rules);
+		// if($validator->fails())
+		// {
+		// 	return Redirect::back()
+		// 		->withInput()
+		// 		->withErrors($validator);
+		// }
+
+		// $type = new Itemtype;
+		// $type->type = Input::get('name');
+		// $type->description = Input::get('description');
+		// $type->save();
+
+		// Session::flash('success-message','Item type created');
+		// return Redirect::to('item/type');
+		$total = $this->sanitizeString(Input::get('totalFields'));
+		$field = "";
+
+		//combines all data in a field
+		// $total is the total fields in the form
+		for($ctr = 0;$ctr < $total;$ctr++)
 		{
-			return Redirect::back()
-				->withInput()
-				->withErrors($validator);
+			$form = $this->sanitizeString(Input::get('form'.$ctr));
+			// validates if the form exists or has content
+			// needs to add more validations to this field
+			if($form != "" || !empty($form)){
+				// check if the form is the first
+				// if the form is the first, adds a ','
+				if($ctr > 0) $field = $field.",";
+				//adds the form to the existing field variable
+				$field = $field.$form;
+			}
 		}
 
-		$type = new Itemtype;
-		$type->type = Input::get('name');
-		$type->description = Input::get('description');
-		$type->save();
-
-		Session::flash('success-message','Item type created');
+		return "Fields: ".$field;
 		return Redirect::to('item/type');
 	}
 
@@ -90,6 +113,23 @@ class ItemTypesController extends \BaseController {
 
 	}
 
+	public function updateView()
+	{
+		$itemtype = Itemtype::all();
+		return View::make('item.type.update-view')
+			->with('itemtype',$itemtype)
+			->with('active_tab','update');
+	}
+
+	public function removeView()
+	{
+
+		$itemtype = Itemtype::all();
+		return View::make('item.type.remove-view')
+			->with('itemtype',$itemtype)
+			->with('active_tab','remove');
+	}
+
 	public function getAllItemTypes()
 	{
 		if(Request::ajax())
@@ -99,5 +139,13 @@ class ItemTypesController extends \BaseController {
 		}
 	}
 
+	public function getItemTypes()
+	{
+		if(Request::ajax())
+		{
+			$itemtype = Itemtype::all();
+			return $itemtype->paginate(2);
+		}
+	}
 
 }

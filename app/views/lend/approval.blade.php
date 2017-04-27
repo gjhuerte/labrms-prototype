@@ -6,8 +6,9 @@ Receive
 @include('layouts.navbar')
 @stop
 @section('content')
-<div class="container">
-	<div class="row" style="background: white;">
+<div class="container-fluid">
+	@include('inventory.sidebar.default')
+	<div class="col-md-10">
 		<div class="panel panel-body table-responsive">
 			<table class="table table-hover table-striped" id="approvalTable">
 				<thead>
@@ -21,15 +22,6 @@ Receive
 				</thead>
 				<tbody>
 				@if(count($lend) == 0)
-					<tr>
-						<td> --- </td>
-						<td> --- </td>
-						<td> --- </td>
-						<td> --- </td>
-						<td> --- </td>
-						<td> --- </td>
-						<td> --- </td>
-					</tr>
 				@else
 					@foreach($lend as $lend)
 					<tr>

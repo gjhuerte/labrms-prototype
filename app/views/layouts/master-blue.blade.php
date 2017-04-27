@@ -8,10 +8,10 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap -->
+    {{ HTML::style(asset('css/jquery-ui.css')) }}
     {{ HTML::style(asset('css/bootstrap.min.css')) }}
     {{ HTML::style(asset('css/sweetalert.css')) }}
     {{ HTML::style(asset('css/dataTables.bootstrap.min.css')) }}
-    {{ HTML::style(asset('css/jquery-ui.css')) }}
     @yield('style-include')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,26 +21,33 @@
     <![endif]-->
     @yield('style')
     
+    <style>
+      /*body style*/
+      body
+      {
+/*        background-color: #00b5f0;
+        background-image: url('{{ asset("images/background-white.png")  }}');*/
+        background: url('{{ asset("images/background-blue-flat.png")  }}') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+    </style>
+    
     {{ HTML::script(asset('js/jquery.min.js')) }}
+    {{ HTML::script(asset('js/jquery-ui.js')) }}
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     {{ HTML::script(asset('js/bootstrap.min.js')) }}
     {{ HTML::script(asset('js/sweetalert.min.js')) }}
     {{ HTML::script(asset('js/jquery.dataTables.min.js')) }}
     {{ HTML::script(asset('js/dataTables.bootstrap.min.js')) }}
-    {{ HTML::script(asset('js/jquery-ui.js')) }}
     @yield('script-include')
-    <style>
-      /*body style*/
-      body
-      {
-        background-color: #00b5f0;
-        background-image: url({{ asset('images/background-blue.png')  }});
-      }
-    </style>
   </head>
   <body>
     @yield('navbar')
     @yield('content')
+    @yield('footer')
     @yield('script')
   </body>
 </html>

@@ -11,7 +11,8 @@ class EquipmentsController extends \BaseController {
 	{
 		$items = Itemprofile::all();
 		return View::make('equipment.index')
-			->with('items',$items);
+			->with('items',$items)
+			->with('active_tab','overview');
 	}
 
 
@@ -22,7 +23,8 @@ class EquipmentsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('equipment.create');
+		return View::make('equipment.create')
+			->with('active_tab','add');
 	}
 
 
@@ -262,5 +264,25 @@ class EquipmentsController extends \BaseController {
 		return Redirect::to('equipment');
 	}
 
+	public function deployView(){
+		$items = Itemprofile::all();
+		return View::make('equipment.deploy-view')
+			->with('items',$items)
+			->with('active_tab','deploy');
+	}
+
+	public function updateView(){
+		$items = Itemprofile::all();
+		return View::make('equipment.update-view')
+			->with('items',$items)
+			->with('active_tab','update');
+	}
+
+	public function condemnView(){
+		$items = Itemprofile::all();
+		return View::make('equipment.condemn-view')
+			->with('items',$items)
+			->with('active_tab','condemn');
+	}
 
 }

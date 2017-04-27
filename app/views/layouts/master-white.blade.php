@@ -8,10 +8,11 @@
     <title>@yield('title')</title>
 
     <!-- Bootstrap -->
-    {{ HTML::style(asset('css/bootstrap.css')) }}
+    {{ HTML::style(asset('css/jquery-ui.css')) }}
+    {{ HTML::style(asset('css/bootstrap.min.css')) }}
     {{ HTML::style(asset('css/sweetalert.css')) }}
     {{ HTML::style(asset('css/dataTables.bootstrap.min.css')) }}
-    {{ HTML::style(asset('css/buttons.bootstrap.min.css')) }}
+    @yield('style-include')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -20,34 +21,27 @@
     <![endif]-->
     @yield('style')
     
+    <style>
+      /*body style*/
+      body
+      {
+        background-color: #EEEEEE;
+        background-image: url('{{ asset("images/background-white.png")  }}');
+      }
+    </style>
+    
     {{ HTML::script(asset('js/jquery.min.js')) }}
+    {{ HTML::script(asset('js/jquery-ui.js')) }}
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     {{ HTML::script(asset('js/bootstrap.min.js')) }}
     {{ HTML::script(asset('js/sweetalert.min.js')) }}
     {{ HTML::script(asset('js/jquery.dataTables.min.js')) }}
     {{ HTML::script(asset('js/dataTables.bootstrap.min.js')) }}
-    {{ HTML::script(asset('js/dataTables.buttons.min.js')) }}
-    {{ HTML::script(asset('js/buttons.bootstrap.min.js')) }}
-    {{ HTML::script(asset('js/buttons.colVis.min.js')) }}
-    {{ HTML::script(asset('js/buttons.html5.min.js')) }}
-    {{ HTML::script(asset('js/buttons.print.min.js')) }}
-    {{ HTML::script(asset('js/jszip.min.js')) }}
-    {{ HTML::script(asset('js/pdfmake.min.js')) }}
-    {{ HTML::script(asset('js/vfs_fonts.js')) }}
     @yield('script-include')
-    <style>
-      /*body style*/
-      body
-      {
-        background-color: #000000;
-        background-image: url(images/background-inverse.png);
-      }
-    </style>
   </head>
   <body>
     @yield('navbar')
     @yield('content')
-    @yield('footer')
     @yield('script')
   </body>
 </html>

@@ -11,7 +11,8 @@ class ScheduleController extends \BaseController {
 	{
 		$schedules = Schedule::all();
 		return View::make('schedule.index')
-			->with('schedules',$schedules);
+			->with('schedules',$schedules)
+			->with('active_tab','overview');
 	}
 
 
@@ -174,6 +175,22 @@ class ScheduleController extends \BaseController {
 		Session::flash('success-message','Schedule deleted');
 		return Redirect::to('schedule');
 
+	}	
+
+	public function updateView()
+	{
+		$schedules = Schedule::all();
+		return View::make('schedule.update-view')
+			->with('schedules',$schedules)
+			->with('active_tab','update');
+	}
+
+	public function deleteView()
+	{
+		$schedules = Schedule::all();
+		return View::make('schedule.delete-view')
+			->with('schedules',$schedules)
+			->with('active_tab','remove');
 	}
 
 

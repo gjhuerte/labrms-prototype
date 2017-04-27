@@ -17,8 +17,8 @@ class HomeController extends BaseController {
 
 	public function index()
 	{
-		// return View::make('index');
-		return Redirect::to('login');
+		return View::make('index');
+		// return Redirect::to('login');
 	}
 
 }

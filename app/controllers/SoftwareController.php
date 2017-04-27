@@ -10,7 +10,8 @@ class SoftwareController extends \BaseController {
 	public function index()
 	{
 		return View::make('software.index')
-			->with('softwares',Softwarelist::all());
+			->with('softwares',Softwarelist::all())
+			->with('active_tab','overview');
 	}
 
 
@@ -225,5 +226,17 @@ class SoftwareController extends \BaseController {
 
 	}
 
+	public function updateView()
+	{
+		return View::make('software.update-view')
+			->with('softwares',Softwarelist::all())
+			->with('active_tab','update');
+	}
 
+	public function deleteView()
+	{
+		return View::make('software.delete-view')
+			->with('softwares',Softwarelist::all())
+			->with('active_tab','remove');
+	}
 }

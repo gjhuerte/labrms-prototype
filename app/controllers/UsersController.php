@@ -9,7 +9,9 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('user.index');
+		$person = Auth::user();
+		return View::make('user.index')
+			->with('person',$person);
 	}
 
 	/**

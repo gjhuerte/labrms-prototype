@@ -11,7 +11,8 @@ class ItemInventoryController extends \BaseController {
 	{
 		$inventory = Inventory::all();
 		return View::make('inventory.item.index')
-			->with('inventorydetails',$inventory);
+			->with('inventorydetails',$inventory)
+			->with('active_tab','item');
 	}
 
 

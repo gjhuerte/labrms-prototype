@@ -10,7 +10,8 @@ class RoomInventoryController extends \BaseController {
 	public function index()
 	{
 		return View::make('inventory.room.index')
-			->with('roominventory',Roominventory::all());
+			->with('rooms',Room::all())
+			->with('active_tab','room');
 	}
 
 	/**

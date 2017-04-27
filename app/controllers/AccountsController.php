@@ -9,9 +9,10 @@ class AccountsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$user = User::where('username','!=','admin')->get();
+		$user = User::all();
 		return View::make('account.index')
-			->with('user',$user);	
+			->with('user',$user)
+			->with('active_tab','overview');	
 	}
 
 
@@ -22,7 +23,8 @@ class AccountsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('account.create');
+		return View::make('account.create')
+			->with('active_tab','add');
 	}
 
 
@@ -43,15 +45,13 @@ class AccountsController extends \BaseController {
 		$type = $this->sanitizeString(Input::get('type'));
 
 		$validator = Validator::make([
-			'last name' => $lastname,
-			'first name' => $firstname,
-			'middle name' => $middlename,
-			'username' => $username,
-			'contact number' => $contactnumber,
-			'email' => $email,
-			'password' => Hash::make($password),
-			'accesslevel' => '2',
-			'type' => $type
+			'Last name' => $lastname,
+			'First name' => $firstname,
+			'Middle name' => $middlename,
+			'Username' => $username,
+			'Contact number' => $contactnumber,
+			'Email' => $email,
+			'Password' => $password
 		],User::$rules);
 
 		if($validator->fails())
@@ -71,12 +71,20 @@ class AccountsController extends \BaseController {
 		$user->password = Hash::make($password);
 		$user->type = $type; 
 		$user->status = '1';
+		if($type == 'assistant')
+		$user->accesslevel = '1';
+		if($type == 'staff')
 		$user->accesslevel = '2';
+		if($type == 'faculty')
+		$user->accesslevel = '3';
+		if($type == 'student')
+		$user->accesslevel = '4';
 		$user->save();
 		
 		Session::flash("success-message","Account successfully created!");
 
-		return Redirect::to('account');
+		return Redirect::to('account/create')
+			->with('active_tab','add');
 	}
 
 
@@ -104,7 +112,8 @@ class AccountsController extends \BaseController {
 	{
 		$user = User::find($id);
 		return View::make('account.update')
-			->with('user',$user);
+			->with('user',$user)
+			->with('active_tab','update');
 	}
 
 
@@ -124,49 +133,37 @@ class AccountsController extends \BaseController {
 		$type = $this->sanitizeString(Input::get('type'));
 
 		$user = User::find($id);
-		if(Input::get('status') == "Activate"){
-			$user->status = '1';
-		}elseif(Input::get('status') == "Deactivate"){
-			$user->status = '0';
-		}elseif(Input::get('access') == 'Set as admin'){
-			$user->accesslevel = '1';
-		}elseif(Input::get('access') == 'Set as regular user'){
-			$user->accesslevel = '2';
-		}else{
+		$validator = Validator::make([
+			'last name' => $lastname,
+			'first name' => $firstname,
+			'middle name' => $middlename,
+			'contact number' => $contactnumber,
+			'email' => $email,
+			'password' => 'dummypassword',
+			'username' => 'sampleusernameonly',
+			'accesslevel' => '2',
+			'type' => $type
+		],User::$updateRules);
 
-			$validator = Validator::make([
-				'last name' => $lastname,
-				'first name' => $firstname,
-				'middle name' => $middlename,
-				'contact number' => $contactnumber,
-				'email' => $email,
-				'password' => 'dummypassword',
-				'username' => 'sampleusernameonly',
-				'accesslevel' => '2',
-				'type' => $type
-			],User::$updateRules);
-
-			if($validator->fails())
-			{
-				return Redirect::back()
-					->withInput()
-					->withErrors($validator);
-			}
-
-			$user->lastname = $lastname;
-			$user->firstname = $firstname;
-			$user->middlename = $middlename;
-			$user->contactnumber = $contactnumber;
-			$user->email = $email;
-			$user->type = $type; 
-			$user->status = '1';
-
+		if($validator->fails())
+		{
+			return Redirect::back()
+				->withInput()
+				->withErrors($validator);
 		}
+
+		$user->lastname = $lastname;
+		$user->firstname = $firstname;
+		$user->middlename = $middlename;
+		$user->contactnumber = $contactnumber;
+		$user->email = $email;
+		$user->type = $type; 
+		$user->status = '1';
 
 		$user->save();
 		
 		Session::flash('success-message','Account information updated');
-		return Redirect::to('account');
+		return Redirect::to('account/all/edit');
 	}
 
 
@@ -181,7 +178,90 @@ class AccountsController extends \BaseController {
 		$user = User::find($id);
 		$user->delete();
 		Session::flash('success-message','Account deleted!');
-		return Redirect::to('account');
+		return Redirect::to('account/all/delete');
 	}
 
+	public function retrieveDeleted()
+	{
+		if(Request::ajax()){
+			return User::onlyTrashed()->get();
+		}
+
+		$user = User::onlyTrashed()->get();
+		return View::make('account.restore')
+			->with('user',$user)
+			->with('active_tab','restore');
+
+	}
+
+	public function restore($id)
+	{
+		if(Request::ajax()){
+
+		}
+
+		$id = $this->sanitizeString($id);
+
+		//validates if id exist in database
+		if(count(User::withTrashed()->find($id)) == 0)
+		{
+			Session::flash('error-message','Invalid ID');
+			return Redirect::to('account/deleted/all');
+		}
+		$user = User::onlyTrashed()->find($id);
+		$user->restore();
+		Session::flash('success-message',"Account restored!");
+        return Redirect::to('account/deleted/all');
+	}
+
+	public function retrieveInactiveAccount()
+	{
+		$user = User::where('status','=','0')->get();
+		if(Request::ajax())
+		{
+			return json_encode($user);
+		}
+
+		return View::make('account.activate')
+			->with('user',$user)
+			->with('active_tab','activation');
+	}
+
+	public function activateAccount()
+	{
+		if(Request::ajax())
+		{
+			$id = $this->sanitizeString(Input::get('id'));
+			$user = User::find($id);
+			$user->status = 1;
+			$user->save();
+		}
+	}
+
+	public function updateView()
+	{
+		$user = User::where('username','!=','admin')->get();
+		return View::make('account.update-view')
+			->with('user',$user)
+			->with('active_tab','update');		
+	}
+
+	public function deleteView()
+	{
+		$user = User::where('username','!=','admin')->get();
+		return View::make('account.delete-view')
+			->with('user',$user)
+			->with('active_tab','remove');		
+	}
+
+	public function changeUserPassword()
+	{
+		if(Request::ajax())
+		{
+			$id = $this->sanitizeString(Input::get('id'));
+		 	$user = User::find($id);
+		 	$user->password = Hash::make('123456');
+		 	$user->save();
+		}
+	}
 }

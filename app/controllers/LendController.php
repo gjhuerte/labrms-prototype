@@ -36,7 +36,8 @@ class LendController extends \BaseController {
 	public function approve()
 	{
 		return View::make('lend.approval')
-			->with('lend',Lendlog::all());
+			->with('lend',Lendlog::all())
+			->with('active_tab','lend');
 	}
 
 
