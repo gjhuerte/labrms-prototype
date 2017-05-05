@@ -151,6 +151,25 @@ Create
 		  		swal("Oops...","Item name must not be empty","error");
 			}else if(isNaN(quantity) || quantity == false){
 		  		swal("Oops...","Quantity field must have a number","error");
+			}else if(quantity > 10){
+				swal({
+				  title: "Are you sure?",
+				  text: "Fields will take more time to load, Do you still want to continue?",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonText: "Yes, i want to continue!",
+				  cancelButtonText: "No, cancel it!",
+				  closeOnConfirm: false,
+				  closeOnCancel: true,
+				  showLoaderOnConfirm: true,
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					itemFieldAjaxRequest();
+				  } else {
+				    swal("Cancelled", "Profiling Cancelled", "error");
+				  }
+				});
 			}else{
 				$('#two').fadeIn(200);
 				$('#one').hide(100);
@@ -172,10 +191,16 @@ Create
 			  dataType: 'html',
 			  success: function(response){ 
 			    $('#item').html(" ");
-			    $('#item').append(response).hide().fadeIn('slow');
+			    $('#item').append(response).hide();
 			  },
 			  error: function(response){
 			    console.log(response.responseJSON);
+			  },
+			  complete: function(){
+				$('#one').hide(100);
+				$('#two').fadeIn(200);
+			  	$('#item').show();
+		  		swal.close();
 			  }
 			 });
 		}

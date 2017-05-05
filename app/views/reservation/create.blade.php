@@ -30,7 +30,16 @@ Reservation
 	<div class="col-md-6"  id='calendar-panel'>
 		<div id="calendar" class="panel panel-body"></div>
 	</div>
-	<div class="col-md-offset-3 col-md-6 panel panel-body" id="pagebody" style="padding: 10px;">
+	<div class="col-md-3" id="item-search">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				Item Search
+			</div>
+			<div class="panel-body">
+			</div>	
+		</div>
+	</div>
+	<div class="col-md-6 panel panel-body" id="pagebody" style="padding: 10px;">
 		@if (count($errors) > 0)
 		  <div class="alert alert-danger alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -41,7 +50,7 @@ Reservation
 		      </ul>
 		  </div>
 		@endif    
-		<div class="" style="padding:20px;">
+		<div style="padding:20px;">
 			<legend>
 				<h3 style="color:#337ab7;">Reservation Form
 				{{ Form::button('Show Calendar',[
@@ -180,6 +189,52 @@ Reservation
 			{{ Form::close() }}
 		</div>
 	</div>
+	<div class="col-md-3" id="reservation-info">
+		<div class="panel panel-primary" style="border: none;border-radius: 0px;">
+			<div class="panel-heading">
+				Important Notes
+			</div>
+			<div class="panel-body">
+				<dl>
+					<dt class="bg-info text-info" style="padding: 10px;margin: 10px;">Reservation Date:
+					</dt>
+					<dd class="text-muted" style="padding: 10px;margin: 10px;">
+						<ul class="list-unstyled text-justify">
+							<li>
+								<strong>3 and above</strong> working days prior to the day of use <span class="label label-success">Safe</span>
+							</li>
+							<li>
+								<strong>3</strong> days. The default day for reservation <span class="label label-warning">Ok</span>
+							</li>
+							<li>
+								<strong>Below 3</strong> days. This may revoke your chance of reservation unless you present a letter for special case approved by higher authority <span class="label label-danger">Danger</span>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt class="bg-info text-info" style="padding: 10px;margin: 10px;">
+						Notification:
+					</dt>
+					<dd class="text-muted text-justify" style="padding: 10px;margin: 10px;">
+						<strong>One day</strong> before the date of use, your reservation will be approved or disapproved by the administrator. Check your dashboard for any notification. 
+					</dd>
+				</dl>
+				<dl>
+					<dt class="bg-info text-info" style="padding: 10px;margin: 10px;">
+						Revoking Reservation:
+					</dt>
+					<dd class="text-muted text-justify" style="padding: 10px;margin: 10px;">
+						Your reservation may be revoked or disapproved based on the following:
+							<ul class="list-unstyled">
+								<li>Incomplete Information filed</li>
+								<li>Prioritization</li>
+							</ul> 
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
 </div>
 @stop
 @section('script')
@@ -193,10 +248,11 @@ Reservation
 		  swal("Oops...","{{ Session::pull('error-message') }}","error");
 		@endif
 
-		$('#page-body').slideDown(600);
+		$('#page-body').show();
 
 		$('#show').click(function(){
-				$('#pagebody').removeClass('col-md-offset-3');
+				$('#reservation-info').hide();
+				$('#item-search').hide();
 				$('#hide').show(0);
 				$('#show').hide(400);
 				$('#calendar-panel').fadeIn(400);
@@ -204,7 +260,8 @@ Reservation
 		});
 
 		$('#hide').click(function(){
-				$('#pagebody').addClass('col-md-offset-3');
+				$('#reservation-info').show();
+				$('#item-search').show();
 				$('#show').show(400);
 				$('#hide').hide(400);
 				$('#calendar-panel').fadeOut(0);

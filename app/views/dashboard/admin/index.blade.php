@@ -6,14 +6,11 @@ Dashboard
 @include('layouts.navbar')
 @stop
 @section('style')
-
-	{{ HTML::style(asset('css/fullcalendar.min.css')) }}
-	{{ HTML::style(asset('css/fullcalendar.print.min.css',['media'=>'print'])) }}
-@stop
-@section('script-include')
-	{{ HTML::script(asset('js/moment.min.js')) }}	
-	{{ HTML::script(asset('js/fullcalendar.min.js')) }}
-	{{ HTML::script(asset('js/gcal.min.js')) }}
+<style>
+  .panel{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+</style>
 @stop
 @section('content')
 @include('modal.ticket.create')

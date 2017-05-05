@@ -11,7 +11,8 @@ class RoomsController extends \BaseController {
 	{
 		$rooms = Room::all();
 		return View::make('room.index')
-			->with('rooms',$rooms);
+			->with('rooms',$rooms)
+			->with('active_tab','overview');
 	}
 
 
@@ -158,5 +159,20 @@ class RoomsController extends \BaseController {
 		return Redirect::to('room');
 	}
 
+	public function updateView()
+	{
+		$rooms = Room::all();
+		return View::make('room.update-view')
+			->with('rooms',$rooms)
+			->with('active_tab','update');
+	}
+
+	public function deleteView()
+	{
+		$rooms = Room::all();
+		return View::make('room.delete-view')
+			->with('rooms',$rooms)
+			->with('active_tab','remove');
+	}
 
 }

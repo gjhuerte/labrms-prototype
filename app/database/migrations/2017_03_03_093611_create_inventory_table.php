@@ -15,14 +15,15 @@ class CreateInventoryTable extends Migration {
 		Schema::create('inventory', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('itemname');
+			$table->string('itemtype',100);
+			$table->string('brand',100)->nullable();
+			$table->string('model',100)->nullable();
+			$table->string('details',500)->nullable();
+			$table->string('warranty',100)->nullable();
+			$table->string('unit',20);
 			$table->integer('quantity');
-			$table->integer('added');
-			$table->integer('adjust');
-			$table->integer('deduct');
-			$table->integer('total');
+			$table->integer('profileditems');
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 

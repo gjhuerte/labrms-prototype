@@ -1,4 +1,38 @@
-{{HTML::style(asset('css/navbar-style.css'))}}
+<style>
+  .navbar-fixed-top
+  {
+    height: 50px;
+  }
+  /*navbar brand*/
+  .navbar-brand
+  {
+    padding-top: 0;
+    padding-left:3;
+  }
+  .img-size
+  {
+    width:100%;
+    height:50%;
+    margin:0;
+  }
+  .img-responsive
+  {
+    width:100%;
+    height:50%;
+    margin:0;
+  }
+  /* Link Hover*/
+  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #00b5f0;
+  }
+  /* Button Hover*/
+   .navbar-nav .navbar-right > .btn:hover 
+  {
+      background-color: #00b5f0;
+      border-color: #00b5f0;
+      color: rgb(255, 255, 255);
+  }
+</style>
  <!-- navbar for login in -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -11,7 +45,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">
-       <img src="{{ asset('images/logo-new.png') }}">
+       <img src="{{ asset('images/logo/logo-black.png') }}">
       </a>
     </div><!-- end of brand toggle -->
 
@@ -20,8 +54,7 @@
       <!-- navbar right -->
       <ul class="nav navbar-nav navbar-right">
         <li>{{ HTML::link('dashboard','Home') }}</li>
-        <!-- maintenance dropdown tab -->
-        <li>{{ HTML::link('ticket/create','Generate Ticket') }}
+        <li>{{ HTML::link('item/profile','Profiling') }}</li>
         <!-- maintenance dropdown tab -->
         <li>{{ HTML::link('inventory/item','Inventory') }}</li> <!-- end of maintenance dropdown tab -->
         <!-- tenant maintenance tab -->
@@ -53,24 +86,12 @@
           </ul> <!-- end of dropdown items -->
         </li> <!-- end of maintenance dropdown tab -->
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
-          <!-- dropdown items -->
-          <ul class="dropdown-menu">
-            <!-- tenant maintenance tab -->
-            <li>{{ link_to('report/incident','Incident Report') }}</li>
-            <li>{{ HTML::link('report/item','Item Master List') }}</li>
-            <li>{{ link_to('report/itemprofile','Item Profile') }}</li>
-            <li>{{ link_to('report/log','Log Sheet') }}</li>
-            <li>{{ link_to('report/roominventory','Room Inventory') }}</li>
-            <li>{{ link_to('report/payment','Payment Report') }}</li>
-          </ul> <!-- end of dropdown items -->
-        </li> <!-- end of maintenance dropdown tab -->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{{ Auth::user()->firstname." ".Auth::user()->lastname }}} <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle text-capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{{ Auth::user()->firstname }}} {{{ Auth::user()->lastname }}}<span class="caret"></span></a>
           <!-- dropdown items -->
           <ul class="dropdown-menu">
             <li>{{ link_to('profile','Profile') }}</li>
-            <li>{{ link_to('settings','Change Password') }}</li>
+            <li>{{ link_to('settings','Settings') }}</li>
+            <li>{{ link_to('reports','Reports') }}</li>
             <li role="separator" class="divider"></li>
             <li>{{ link_to('logout','Logout') }}</li>
           </ul> <!-- end of dropdown items -->

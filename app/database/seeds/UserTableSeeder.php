@@ -1,3 +1,4 @@
+
 <?php
 
 class UserTableSeeder extends Seeder {
@@ -10,21 +11,17 @@ class UserTableSeeder extends Seeder {
 	public function run()
 	{
          //delete users table records
-         DB::table('user')->delete();
-         
-		User::create([
-			'lastname' => 'Doe',
-			'firstname' => 'John',
-			'middlename' => 'Juan',
-			'username' => 'admin',
-			'contactnumber' => '0942481398',
-			'email' => 'johndoe@gmail.com',
-			'password' => Hash::make('123456'),
-			'accesslevel' => '0',
-			'type' => 'admin',
-			'status' => '1'
-		]);
+         DB::table('user')->delete();	
 
+         //insert some dummy records
+         DB::table('user')->insert(array(
+             ['username' => 'admin','password' => Hash::make('123456'),'accesslevel' =>'0','firstname' => 'fred','middlename' => 'grejalde','lastname' => 'yu','contactnumber' => '091234567','email' => 'fred@yahoo.com','type' => 'faculty','status' => '1'],
+
+          ));
 	}
 
+
+
 }
+
+		

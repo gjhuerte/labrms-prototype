@@ -16,7 +16,8 @@ Create
 	}
 </style> 
 <div class="container-fluid" id="page-body">
-	<div class='col-md-12'>     
+	@include('equipment.sidebar.default')
+	<div class='col-md-10'>     
 		<div id="page-column" class="col-md-offset-3 col-md-6 panel panel-body">
 	      @if (count($errors) > 0)
          	 <div class="alert alert-danger alert-dismissible" role="alert">

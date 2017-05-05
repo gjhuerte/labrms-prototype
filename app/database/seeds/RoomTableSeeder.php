@@ -15,16 +15,16 @@ class RoomTableSeeder extends Seeder {
 
          //insert some dummy records
          DB::table('room')->insert(array(
-             ['name' => 'S501','description'=>'Database'],
-             ['name' => 'S502','description'=>'Database'],
-             ['name' => 'S503','description'=>'Networking'],
-             ['name' => 'S504','description'=>'Networking/Hardware'],
-             ['name' => 'Consultation Room','description'=>'Consultation/Defense'],
-             ['name' => 'Faculty Room','description'=>'Faculty'],
-             ['name' => 'Server','description'=>'Server'],
-             ['name' => 'S508','description'=>'Web Development'],
-             ['name' => 'S510','description'=>'Database'],
-             ['name' => 'S511','description'=>'Multimedia'],
+             ['name' => 'S501','description' => '0'],
+             ['name' => 'S502','description' => '0'],
+             ['name' => 'S503','description' => '0'],
+             ['name' => 'S504','description' => '0'],
+             ['name' => 'Consultation Room','description' => '0'],
+             ['name' => 'Faculty Room','description' => '0'],
+             ['name' => 'Server','description' => '0'],
+             ['name' => 'S508','description' => '0'],
+             ['name' => 'S510','description' => '0'],
+             ['name' => 'S511','description' => '0'],
 
           ));
 	}

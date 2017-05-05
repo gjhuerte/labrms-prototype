@@ -4,7 +4,6 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
- use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait, SoftDeletingTrait;
@@ -17,8 +16,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	//The table in the database used by the model.
 	protected $table  = 'user';
-		protected $dates = ['deleted_at'];
-
+	protected $dates = ['deleted_at'];
 	//The attribute that used as primary key.
 	protected $primaryKey = 'id';
 
@@ -29,22 +27,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = ['password','remember_token'];
 	//Validation rules!
 	public static $rules = array(
-		'username' => 'required|min:4|max:20|unique:User,username',
-		'password' => array('required','between:2,100'),
-		'first name' => 'required|between:2,100|string',
-		'middle name' => 'required|between:2,50|string',
-		'last name' => 'required|between:2,50|string',
-		'contact number' => 'required|size:11|string',
-		'email' => 'required|email'
+		'Username' => 'required_with:password|min:4|max:20|unique:User,username',
+		'Password' => 'required|min:6|max:50',
+		'First name' => 'required|between:2,100|string',
+		'Middle name' => 'min:2|max:50|string',
+		'Last name' => 'required|min:2|max:50|string',
+		'Contact number' => 'required|size:11|string',
+		'Email' => 'required|email'
 	);
 
 	public static $updateRules = array(
-		'username' => 'required|min:4|max:20',
-		'password' => 'required|between:2,100',
-		'first name' => 'required|between:2,100|string',
-		'middle name' => 'required|between:2,50|string',
-		'last name' => 'required|between:2,50|string',
-		'contact number' => 'required|size:11|string',
+		'Username' => 'required_with:password|min:4|max:20',
+		'Password' => 'required|min:6|max:50',
+		'First name' => 'required|min:2|max:100|string',
+		'Middle name' => 'required|min:2|max:50|string',
+		'Last name' => 'required|min:2|max:50|string',
+		'Contact number' => 'required|size:11|string',
 		'email' => 'required|email'
 	);
 

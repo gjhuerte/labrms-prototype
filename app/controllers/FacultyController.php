@@ -9,7 +9,10 @@ class FacultyController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('faculty.index');
+		$user = User::all();
+		return View::make('faculty.index')
+			->with('user',$user)
+			->with('active_tab','overview');
 	}
 
 
@@ -20,7 +23,8 @@ class FacultyController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('faculty.create');
+		return View::make('faculty.create')
+			->with('active_tab','add');
 	}
 
 
@@ -83,6 +87,22 @@ class FacultyController extends \BaseController {
 	{
 		Session::has('success-message','Faculty Removed from Database');
 		return Redirect::to('faculty.index');
+	}
+
+	public function updateView()
+	{
+		$user = User::all();
+		return View::make('faculty.update-view')
+			->with('user',$user)
+			->with('active_tab','update');
+	}
+
+	public function deleteView()
+	{
+		$user = User::all();
+		return View::make('faculty.delete-view')
+			->with('user',$user)
+			->with('active_tab','remove');		
 	}
 
 

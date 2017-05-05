@@ -1,4 +1,4 @@
-@extends('layouts.master-blue')
+@extends('layouts.master-white')
 @section('title')
 Generate Ticket
 @stop
@@ -7,15 +7,21 @@ Generate Ticket
 @stop
 @section('content')
 <style>
+	.panel{
+		margin-top: 40px;
+	}
 
 	#page-body, #pagetwo , .transfer, .action-taken{
 		display:none;
 	}
 
 	.panel-padding{
-		padding: 10px;
+		padding: 25px;
 	}
 
+	.panel{
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
 </style>
 <div class="container-fluid" id="page-body">
 	<div class='col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6'>  
@@ -29,10 +35,9 @@ Generate Ticket
               </ul>
           </div>
       @endif    
-		<div class="panel panel-body">
+		<div class="panel panel-body panel-padding">
 			<legend><h3 style="color:#337ab7;">Generate Ticket</h3></legend>
 			{{ Form::open(['method'=>'post','route'=>'ticket.store','class'=>'form-horizontal','id'=>'ticketForm']) }}
-			<div class="col-md-12">
 				<div id="pageone">
 					<!-- Item name -->
 					<div class="form-group">
@@ -141,7 +146,6 @@ Generate Ticket
 						</div>
 					</div>
 				</div>
-			</div>
 			{{ Form::close() }}
 		</div>
 	</div>
