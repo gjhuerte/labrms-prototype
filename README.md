@@ -1,7 +1,10 @@
 # labrms
 laboratory resource management system
+
 polytechnic university of the philippines
+
 college of computer and information sciences
+
 laboratory operations office
 
 libraries used:
